@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        background-image: url("static/Rectangle@3x.png");
+      }
+      .footer .row {
+        height: 25px;
+        border-spacing: 40px;
+      }
+
+      .footer .row .col {
+        padding: 0;
+        margin: 10px;
+      }
+      .col-sm {
+        margin-left: 40px;
+        padding-top: 30px;
+      }
+      .topnav .col{
+        float: right ;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="topnav">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <img
+              src="static/logo.png"
+              alt="Logo"
+              width="100px"
+              height="100px"
+            />
+          </div>
+          <div class="col-6">
+            <h3>EXAM SURVEILLANCE!!!</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="content">
+        <div class="row">
+          <div class="col-sm">
+            <a href="http://localhost:5000/live_video"
+              ><img
+                src="static/live video card.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+          <div class="col-sm">
+            <a href="http://localhost:5000/exams"
+              ><img
+                src="static/exam schedule card@2x.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+          <div class="col-sm">
+            <a href="http://localhost:5000/temp"
+              ><img
+                src="static/change status card.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <h5>Recent Activity</h5>
+        </div>
+        <div class="row" style="border-top: 4px grey solid; ">
+          <div class="col" style="border-right: 4px grey solid; ">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+            </ul>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

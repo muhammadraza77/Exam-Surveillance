@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+  </head>
+  <body>
+    <form action="" method="POST">
+      <div class="split right">
+        <div class="login-box">
+          <h1>Login</h1>
+          <p>Welcome back ,Login to get insights</p>
+          <div class="textbox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input type="text" placeholder="16k-3886" name="" value="" />
+          </div>
+
+          <div class="textbox">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input type="password" placeholder="Password" name="" value="" />
+          </div>
+
+          <div class="image">
+            <a href="http://localhost:5000/home" style="margin: 15px;"
+              ><img src="static/login button.png" height="40px" width="180px"
+            /></a>
+          </div>
+          <a href="http://localhost:5000/temp"> Forget Password ? </a>
+        </div>
+      </div>
+
+      <div class="split left">
+        <div class="centered">
+          <img src="static/logo.png" height="120px" />
+          <h2>Exam Surveillance!!!</h2>
+        </div>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
+          aliquid ipsa ut repellat, consequuntur libero animi nostrum similique
+          adipisci necessitatibus eaque commodi maxime, quam cum maiores
+          laboriosam, fugiat debitis repudiandae?
+        </p>
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Live video</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <style>
+      .wrapper {
+        position: relative;
+        
+        color: red;
+      }
+
+
+      .top-left {
+        position: absolute;
+        top: 8px;
+        left: 14px;
+      }
+
+      .centered {
+       position: absolute;
+       top: 50%;
+       left: 40%;
+       transform: translate(-50%, -50%);
+       color: white;
+     }
+      iframe {
+        height: 400px;
+        width: 500px;
+      }
+      .row {
+        margin-top: 10px;
+      }
+
+      .center {
+        text-align: center;
+      }
+      .p {
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h2 style="padding-left: 40%;">EXAM ID #1</h2>
+      </div>
+      <!-- <div class="wrapper"> -->
+        <div class="row">
+          <div class="col-6" style="border-right: 4px grey solid; ">
+            <iframe 
+            src="https://www.google.com/"></iframe>
+          </div>
+          <div class="col-6">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="wrapper">
+                      <a href="http://localhost:5000/live_video/225"><img src="../static/rectangle1.png" width="200px" /></a>
+                      <div class="top-left">Live</div>
+                      <div class="centered"> Exam no.1</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="wrapper">
+                      <a href="http://localhost:5000/live_video/225"><img src="../static/rectangle1.png" width="200px" /></a>
+                      <div class="top-left">Live</div>
+                      <div class="centered"> Exam no.2</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="wrapper">
+                      <a href="http://localhost:5000/live_video/255"><img src="../static/rectangle1.png" width="200px" /></a>
+                      <div class="top-left">Live</div>
+                      <div class="centered"> Exam no.3</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="wrapper">
+                      <a href="http://localhost:5000/live_video/225"><img src="../static/rectangle1.png" width="200px" /></a>
+                      <div class="top-left">Live</div>
+                      <div class="centered" > Exam no.4</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="wrapper">
+                      <a href="http://localhost:5000/live_video/225"><img src="../static/rectangle1.png" width="200px" /></a>
+                      <div class="top-left">Live</div>
+                      <div class="centered" style="left: 19%;"> Exam no.5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+      <div class="row">
+        <div class="container">
+          <h4><strong> Course Name :</strong> Programming Fundamentals</h4>
+          <h4><strong> Course Instructor :</strong> Sir Nadeem Kafi</h4>
+          <h4><strong> Room :</strong> E4</h4>
+          <h4><strong> Duration : </strong> 2 hours</h4>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
