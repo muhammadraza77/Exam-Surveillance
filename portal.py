@@ -6,8 +6,21 @@ from model.Model import Room
 from model.Model import Student
 from model.Model import Exam
 from model.Model import DetectionAlert
-# from model.Model import db
+
+from flask import Response
+import threading
+import socket
+
 from sqlalchemy import text
+
+import cv2
+import sys
+import pickle
+import numpy as np
+import struct ## new
+import zlib
+
+
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -45,7 +58,7 @@ def live_video(video_id):
     for Examitration in OtherExam:
         temp.append({"href": "http://localhost:5000/live_video/" +
                      str(Examitration.exam_id), "id": Examitration.exam_id})
-
+    
     return render_template('live_video.html', Examdetails=Examdetails, coursedetails=coursedetails, roomdetails=roomdetails, OtherExam=OtherExam, Examitration=Examitration, temp=temp, id=id)
 
 
@@ -59,6 +72,57 @@ def exams():
     exams = Exam.query.all()
     return render_template("Examination.html", exams=exams)
 
+@app.route("/changestatus", methods=["GET", "POST"])
+def change():
+    return render_template("changestatus.html")
+
+def get_frame():
+    PORT=8485
+
+    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    print('Socket created')
+    s.bind((socket.gethostname(),PORT))
+    print('Socket bind complete')
+    s.listen(10)
+    print('Socket now listening')
+
+    conn,addr=s.accept()
+
+    data = b""
+    payload_size = struct.calcsize(">L")
+    print("payload_size: {}".format(payload_size))
+
+    while True:
+        while len(data) < payload_size:
+            print("Recv: {}".format(len(data)))
+            data += conn.recv(4096)
+
+        print("Done Recv: {}".format(len(data)))
+        packed_msg_size = data[:payload_size]
+        data = data[payload_size:]
+        msg_size = struct.unpack(">L", packed_msg_size)[0]
+        print("msg_size: {}".format(msg_size))
+        while len(data) < msg_size:
+            data += conn.recv(4096)
+        frame_data = data[:msg_size]
+        data = data[msg_size:]
+
+        frame=pickle.loads(frame_data, fix_imports=True, encoding="bytes")
+        frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+        imgencode=cv2.imencode('.jpg',frame)[1]
+        stringData=imgencode.tostring()
+        # print(b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
+        yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
+
+    del(camera)
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # t = threading.Thread(target=capture_image)
+    # t.daemon = True
+    # t.start()
+    app.run(host='localhost', debug=True, threaded=True )
