@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="{{ url_for('static',filename='newmain.css') }}" type="text/css">
+<link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"/>
+
+<html>
+  <body>
+    <br><br>
+    <div class="container">
+      <form action="/" method="POST">
+        <div class="row">
+         
+          <div class="col-4">
+            <input type="text"  name="detection_id" placeholder="Enter your Detection ID....">
+          </div>
+        
+        <!--   <div class="col-25">
+            <label for="lname">Room Id</label>
+          </div> -->
+          <div class="col-4">
+            <input type="text"  name="exam_id" placeholder="Enter your Exam ID.....">
+          </div>
+
+          <div class="col-4">
+          <input type="submit" value="Search record">
+        </div>
+
+      </form>
+    </div>
+<br><br><br><br>
+    <div class="row">
+        <div class="col-6" style="border-right: 4px grey solid; ">
+          <iframe src="https://www.google.com/"></iframe>
+        </div>
+        <div class="col-6" >
+            <br>
+            <label for="lname">Student:-      Muhammad Mujtaba (16k-3863)</label>
+            <br>
+            <label for="lname">Exam:-         Database Systems </label>
+            <br>
+            <label for="lname">Date Time:-    11 Dec 2017  11-12pm </label>
+            <br>
+            
+            <label for="lname">Current Detection:- BlackListed</label>
+            <br>
+            <div class="btn-group show-on-hover">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Change Status <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Pending</a></li>
+                  <li><a href="#">Partial Cheated</a></li>
+                  <li><a href="#">Clear</a></li>
+                </ul>
+          </div>
+        
+        </div>
+    </div>
+  </body>
+
+<style type="text/css">
+  iframe {
+        height: 400px;
+        width: 500px;
+      }
+
+ 
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+</style>
+
+</html>

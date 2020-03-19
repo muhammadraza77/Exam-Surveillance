@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        background-image: url("static/Rectangle@3x.png");
+      }
+      .footer .row {
+        height: 25px;
+        border-spacing: 40px;
+      }
+
+      .footer .row .col {
+        padding: 0;
+        margin: 10px;
+      }
+      .col-sm {
+        margin-left: 40px;
+        padding-top: 30px;
+      }
+      .topnav .col{
+        float: right ;
+      }
+      .vertical-menu {
+          width: 400px;
+          height: 250px;
+          overflow-y: auto;
+      }
+
+      .vertical-menu a {
+        background-color: #eee; /* Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+      }
+
+      .vertical-menu a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+      }
+
+      .vertical-menu a.active {
+        background-color: #4CAF50; /* Add a green color to the "active/current" link */
+        color: white;
+      }
+      .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+      }
+
+      /* On mouse-over, add a deeper shadow */
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
+
+      /* Add some padding inside the card container */
+      .container {
+        padding: 2px 16px;
+      }
+      .myclass {
+        margin-bottom: 10px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="topnav">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <img
+              src="static/logo.png"
+              alt="Logo"
+              width="100px"
+              height="100px"
+            />
+          </div>
+          <div class="col-6">
+            <h3>EXAM SURVEILLANCE!!!</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="content">
+        <div class="row">
+          <div class="col-sm">
+            <a href="http://localhost:5000/live_video/1"
+              ><img
+                src="static/live video card.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+          <div class="col-sm">
+            <a href="http://localhost:5000/exams"
+              ><img
+                src="static/exam schedule card@2x.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+          <div class="col-sm">
+            <a href="http://localhost:5000/changestatus"
+              ><img
+                src="static/change status card.png"
+                alt="Logo"
+                width="250px"
+                height="200px"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <h5>Recent Activity</h5>
+        </div>
+        <div class="row" style="border-top: 4px grey solid; ">
+          <div class="col vertical-menu" style="border-right: 4px grey solid; ">
+            {% for detail in details %}
+              <a class="myclass" href="#">
+                <div class="card">
+                  <div class="container">
+                      <h4><b>{{detail.s_name}}</b></h4>
+                      <p>{{detail.c_name}} - {{detail.r_name}}</p>
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

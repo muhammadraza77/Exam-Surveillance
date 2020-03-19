@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="{{ url_for('static',filename='newmain.css') }}" type="text/css">
+<html>
+  <body>
+    <div class="container">
+      <h1>Add Exam</h1>
+    
+      <form action="/" method="POST">
+        <div class="row">
+          <div class="col-25">
+            <label for="fname">Exam ID</label>
+          </div>
+          <div class="col-75">
+            <input type="text"  name="exam_id" placeholder="Enter your Exam ID....">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="lname">Room Id</label>
+          </div>
+          <div class="col-75">
+            <input type="text"  name="room_id" placeholder="Enter your Room ID.....">
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-25">
+            <label for="subject">Course ID</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="course_id"  >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="subject">Time Slot</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="time_slot"  >
+          </div>
+        </div>
+<br><br>
+        <div class="row">
+          <input type="submit" value="Add">
+        </div>
+      </form>
+    </div>
+
+<div><br><br></div>
+
+    <div class="container">
+    <h1> View Exam</h1>
+    {% for exam in exams %}
+      <p>Exam ID:- {{exam.exam_id}}  ||  Room ID:- {{exam.room_id}} ||  CourseID:-{{exam.course_id}} ||TimeSlot:- {{exam.time_slot}}</p>
+    {% endfor %}
+
+  </div>
+  </body>
+</html>
+
+
+<html>
+  <body>
+   
+  </body>
+</html>

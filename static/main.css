@@ -1,0 +1,116 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+}
+
+.left {
+  left: 0;
+  background-image: url("background pic@2x.png");
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  background-color: white;
+  image-rendering: crisp-edges;
+}
+.img {
+  width: 100%;
+}
+.login-box {
+  width: 280px;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  color: #004b44;
+  margin: 170px;
+}
+.login-box h1 {
+  float: left;
+  font-size: 50px;
+  padding: 13px 0;
+  border-bottom: 6px solid black;
+  margin-bottom: 50px;
+}
+.login-box p {
+  float: left;
+  color: grey;
+  margin-top: -35px;
+}
+a {
+  color: grey;
+  margin: 45px;
+  margin-bottom: -20px;
+}
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 20px 0;
+}
+.textbox i {
+  width: 26px;
+  float: left;
+  text-align: center;
+}
+.textbox input {
+  background: none;
+  outline: none;
+  border: none;
+  float: left;
+  margin: 0 10px;
+  width: 80%;
+  font-size: 18px;
+}
+
+.column {
+  flex: 50%;
+  padding: 10px;
+  height: 25%;
+}
+.row {
+  display: flex;
+}
+
+.column img {
+  float: right;
+}
+.column {
+  flex: 33%;
+  padding: 10px;
+}
+
+.topnav {
+  overflow: hidden;
+  height: 10%;
+  padding: 20px;
+  color: white;
+}
+.content {
+  padding: 10px;
+  height: 30%;
+}
+#footer,
+.footer {
+  background-color: white;
+  padding: 10px;
+  height: 300px;
+  margin: 50px;
+}
+.content img {
+  margin-right: 50px;
+}
+.row .p {
+  float: left;
+}
