@@ -7,11 +7,12 @@ import pickle
 import zlib
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(("", 8485))
+client_socket.connect((socket.gethostname(), 8485))
+# give ip here
 connection = client_socket.makefile('wb')
 
 #ip camera
-cap = cv2.VideoCapture('http://192.168.100.5:8080/video')
+cap = cv2.VideoCapture(cap = cv2.VideoCapture('http://192.168.1.2:5001/video'))
 img_counter = 0
 
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
