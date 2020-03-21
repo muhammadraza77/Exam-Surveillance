@@ -12,7 +12,7 @@ client_socket.connect((socket.gethostname(), 8485))
 connection = client_socket.makefile('wb')
 
 #ip camera
-cap = cv2.VideoCapture(cap = cv2.VideoCapture('http://192.168.1.2:5001/video'))
+cap = cv2.VideoCapture('http://192.168.1.2:5001/video')
 img_counter = 0
 
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
