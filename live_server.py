@@ -1,32 +1,60 @@
+#!/usr/bin/env python
+
+from __future__ import division
 import cv2
-import io
+import numpy as np
 import socket
 import struct
-import time
-import pickle
-import zlib
-
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(("", 8485))
-connection = client_socket.makefile('wb')
-
-#ip camera
-cap = cv2.VideoCapture('http://192.168.100.5:8080/video')
-img_counter = 0
-
-encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
-
-while(True):
-    ret, frame = cap.read()
-
-    result, frame = cv2.imencode('.jpg', frame, encode_param)
-    data = pickle.dumps(frame, 0)
-    size = len(data)
+import math
 
 
-    print("{}: {}".format(img_counter, size))
-    client_socket.sendall(struct.pack(">L", size) + data)
-    img_counter += 1
+class FrameSegment(object):
+    """ 
+    Object to break down image frame segment
+    if the size of image exceed maximum datagram size 
+    """
+    MAX_DGRAM = 2**16
+    MAX_IMAGE_DGRAM = MAX_DGRAM - 64 # extract 64 bytes in case UDP frame overflown
+    def __init__(self, sock, port, addr="127.0.0.1"):
+        self.s = sock
+        self.port = port
+        self.addr = addr
 
-cam.release()
-    
+    def udp_frame(self, img):
+        """ 
+        Compress image and Break down
+        into data segments 
+        """
+        compress_img = cv2.imencode('.jpg', img)[1]
+        dat = compress_img.tostring()
+        size = len(dat)
+        count = math.ceil(size/(self.MAX_IMAGE_DGRAM))
+        array_pos_start = 0
+        while count:
+            array_pos_end = min(size, array_pos_start + self.MAX_IMAGE_DGRAM)
+            self.s.sendto(struct.pack("B", count) +
+                dat[array_pos_start:array_pos_end], 
+                (self.addr, self.port)
+                )
+            array_pos_start = array_pos_end
+            count -= 1
+
+
+def main():
+    """ Top level main function """
+    # Set up UDP socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    port = 12345
+
+    fs = FrameSegment(s, port)
+
+    cap = cv2.VideoCapture(0)
+    while (cap.isOpened()):
+        _, frame = cap.read()
+        fs.udp_frame(frame)
+    cap.release()
+    cv2.destroyAllWindows()
+    s.close()
+
+if __name__ == "__main__":
+    main()

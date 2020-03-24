@@ -1,4 +1,6 @@
-from flask import Flask, render_template, url_for, request, flash, redirect
+from __future__ import division
+
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 from model.Model import Course
@@ -21,9 +23,19 @@ import struct ## new
 import zlib
 
 
+MAX_DGRAM = 2**16
 
+def dump_buffer(s):
+    """ Emptying buffer frame """
+    while True:
+        seg, addr = s.recvfrom(MAX_DGRAM)
+        print(seg[0])
+        if struct.unpack("B", seg[0:1])[0] == 1:
+            print("finish emptying buffer")
+            break
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
+#project_dir = "C:\\Users\\User\\OneDrive\\Desktop\\Exam-Surveillance"
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "database.db"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
@@ -51,8 +63,7 @@ def homescreen():
 def live_video(video_id):
     id = video_id
     Examdetails = Exam.query.filter_by(exam_id=id).first()
-    coursedetails = Course.query.filter_by(
-        course_id=Examdetails.course_id).first()
+    coursedetails = Course.query.filter_by(course_id=Examdetails.course_id).first()
     roomdetails = Room.query.filter_by(room_id=Examdetails.room_id).first()
     OtherExam = Exam.query.filter(Exam.exam_id != id).all()
     temp = []
@@ -75,47 +86,58 @@ def exams():
 
 @app.route("/changestatus", methods=["GET", "POST"])
 def change():
-    return render_template("changestatus.html")
+    detected = None
+    exam_detected =None
+    course_detected = None
+
+    if request.method == "POST" :
+        det_id = request.form.get("detection_id")
+        exam_id = request.form.get("exam_id")
+        # print("detID"+ str(det_id))
+        detected = DetectionAlert.query.filter_by(id = det_id).first()
+        exam_detected = Exam.query.filter_by(exam_id=detected.exam_id).first()
+        course_detected = Course.query.filter_by(course_id=exam_detected.course_id).first()
+    else:
+        print("here")
+        print(request.form)
+    return render_template('changestatus.html',detected=detected,exam_detected=exam_detected,course_detected=course_detected)
+
+@app.route("/updateDatabase",methods=['POST'])
+def updateDatabase():
+    x = (request.form['value'])
+    print(x)
+    return jsonify({'value': x })
 
 def get_frame():
-    PORT=8485
-
-    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    print('Socket created')
-    s.bind((socket.gethostname(),PORT))
-    print('Socket bind complete')
-    s.listen(10)
-    print('Socket now listening')
-
-    conn,addr=s.accept()
-
-    data = b""
-    payload_size = struct.calcsize(">L")
-    print("payload_size: {}".format(payload_size))
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind(('127.0.0.1', 12345))
+    dat = b''
+    dump_buffer(s)
 
     while True:
-        while len(data) < payload_size:
-            print("Recv: {}".format(len(data)))
-            data += conn.recv(4096)
+        print("hey")
+        seg, addr = s.recvfrom(MAX_DGRAM)
+        if struct.unpack("B", seg[0:1])[0] > 1:
+            dat += seg[1:]
+        else:
+            dat += seg[1:]
+            img = cv2.imdecode(np.frombuffer(dat, dtype=np.uint8), 1)
+            
+            imgencode=cv2.imencode('.jpg',img)[1]
+            stringData=imgencode.tostring()
+            # cv2.imshow(img)
+            # print(b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
+            yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
 
-        print("Done Recv: {}".format(len(data)))
-        packed_msg_size = data[:payload_size]
-        data = data[payload_size:]
-        msg_size = struct.unpack(">L", packed_msg_size)[0]
-        print("msg_size: {}".format(msg_size))
-        while len(data) < msg_size:
-            data += conn.recv(4096)
-        frame_data = data[:msg_size]
-        data = data[msg_size:]
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+            dat = b''
 
-        frame=pickle.loads(frame_data, fix_imports=True, encoding="bytes")
-        frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-        imgencode=cv2.imencode('.jpg',frame)[1]
-        stringData=imgencode.tostring()
-        # print(b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
-        yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
+    # cap.release()
+    cv2.destroyAllWindows()
 
     del(camera)
+
 
 @app.route('/video_feed')
 def video_feed():
