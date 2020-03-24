@@ -42,7 +42,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 db = SQLAlchemy(app)
 
 
-
 @app.route('/')
 @app.route('/login')
 def hello():
@@ -68,7 +67,7 @@ def live_video(video_id):
     OtherExam = Exam.query.filter(Exam.exam_id != id).all()
     temp = []
     for Examitration in OtherExam:
-        temp.append({"href": "http://localhost:5000/live_video/" +
+        temp.append({"href": "/live_video/" +
                      str(Examitration.exam_id), "id": Examitration.exam_id})
     
     return render_template('live_video.html', Examdetails=Examdetails, coursedetails=coursedetails, roomdetails=roomdetails, OtherExam=OtherExam, Examitration=Examitration, temp=temp, id=id)
@@ -148,4 +147,4 @@ if __name__ == '__main__':
     # t = threading.Thread(target=capture_image)
     # t.daemon = True
     # t.start()
-    app.run(host='localhost', debug=True, threaded=True )
+    app.run(host='0.0.0.0', debug=True, threaded=True )

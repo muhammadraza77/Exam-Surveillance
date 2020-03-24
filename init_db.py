@@ -18,13 +18,13 @@ db.session.add(course)
 course = Course(course_id = 2,course_name = 'Computer Networking',cr_hours = 3) 
 db.session.add(course)
 # ******************************************************************************************
-room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = 'google.com')
+room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = 'http://192.168.1.2:5001/video')
 db.session.add(room)
 
-room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'google.com')
+room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'http://192.168.1.2:5001/video')
 db.session.add(room)
 
-room = Room(room_id = 3,room_code = 'S-1',capacity = 65,stream_address = 'google.com')
+room = Room(room_id = 3,room_code = 'S-1',capacity = 65,stream_address = 'http://192.168.1.2:5001/video')
 db.session.add(room)
 # ******************************************************************************************
 student = Student(student_id='k16-3890',name='Muhammad Raza',ph_number='03452445249')
