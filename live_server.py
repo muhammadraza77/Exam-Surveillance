@@ -47,6 +47,7 @@ def main():
 
     fs = FrameSegment(s, port)
 
+    # cap = cv2.VideoCapture('http://192.168.1.2:8080/video')
     cap = cv2.VideoCapture(0)
     while (cap.isOpened()):
         _, frame = cap.read()

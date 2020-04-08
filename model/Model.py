@@ -3,9 +3,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = "sqlite:///{}".format(os.path.join(project_dir, "database.db"))
+
+database_file = "sqlite:///{}".format(os.path.join(project_dir+'\\..', "database.db"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -45,6 +47,9 @@ class Exam(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.course_id'),nullable=False)
     duration = db.Column(db.Integer,nullable=True)
     detections = db.relationship('DetectionAlert', backref='exam', lazy=True)
+
+    def __repr__(self):
+        return "exam_id: {}".format(self.exam_id)
 
 class DetectionAlert(db.Model):
     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)

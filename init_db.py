@@ -36,13 +36,13 @@ db.session.add(student1)
 student2 = Student(student_id='k16-3863',name='Mujtaba Bawani',ph_number='0325587555')
 db.session.add(student2)
 # ******************************************************************************************
-exam1 = Exam(exam_id = 1,time_slot = '10-11',room_id = 1,course_id = 2,duration = 1)
+exam1 = Exam(exam_id = 1,time_slot = 'Wed Apr  8 03:24:00 2020',room_id = 1,course_id = 2,duration = 1)
 db.session.add(exam1)
 
-exam = Exam(exam_id = 2,time_slot = '12-1',room_id = 2,course_id = 1,duration = 1)
+exam = Exam(exam_id = 2,time_slot = 'Wed Apr  8 03:25:00 2020',room_id = 2,course_id = 1,duration = 1)
 db.session.add(exam)
 
-exam = Exam(exam_id = 3,time_slot = '1-2',room_id = 3,course_id = 0,duration = 1)
+exam = Exam(exam_id = 3,time_slot = 'Wed Apr  8 03:22:00 2020',room_id = 3,course_id = 0,duration = 1)
 db.session.add(exam)
 # ******************************************************************************************
 det = DetectionAlert(exam=exam,student=student,det_type=1,status="detected")
