@@ -1,0 +1,14 @@
+action_model/outpu
+action_model/cfg
+action_model/outll
+action_model/data
+action_model/backups
+action_model/ammarTestData
+action_model/imgs
+action_model/database
+action_model/__pycache__
+action_model/*.mp4
+action_model/*.txt
+action_model/*.weights
+
+# action_model/
