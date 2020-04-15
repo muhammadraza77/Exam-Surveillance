@@ -35,6 +35,8 @@ class Room(db.Model):
     capacity = db.Column(db.Integer, unique=True, nullable=False, primary_key=False)
     exams = db.relationship('Exam', backref='room', lazy=True)
     stream_address = db.Column(db.String(200), unique=False, nullable=False, primary_key=False)
+    output_port = db.Column(db.String(200), unique=False, nullable=False, primary_key=False)
+
     
 
     def __repr__(self):
@@ -45,6 +47,7 @@ class Exam(db.Model):
     time_slot = db.Column(db.String(80), unique=False, nullable=False, primary_key=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'),nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.course_id'),nullable=False)
+    facenetStatus = db.Column(db.Integer,nullable=False)
     duration = db.Column(db.Integer,nullable=True)
     detections = db.relationship('DetectionAlert', backref='exam', lazy=True)
 
