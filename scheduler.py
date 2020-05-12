@@ -18,8 +18,6 @@ def checktime(t):
 	allExams=Exam.query.filter_by(time_slot='Wed Apr  8 03:24:00 2020').all()
 	# allExams=Exam.query.filter_by(time_slot=time.ctime()).all()	
 	if len(allExams)>0:
-		# startDetection(allExams[0])
-		
 		for i in range(0,len(allExams)):
 			threading.Thread(target=startDetection,kwargs={"examDetails": allExams[i]}).start()
 
@@ -29,6 +27,5 @@ def checktime(t):
 #     schedule.run_pending()
 #     time.sleep(1)
 
-# allExams=Exam.query.filter_by(time_slot='Wed Apr  8 03:24:00 2020').all()
-# print(allExams[0].course.course_name)
+
 checktime(55)
