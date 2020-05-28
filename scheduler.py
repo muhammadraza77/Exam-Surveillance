@@ -9,8 +9,10 @@ from model.Model import Exam
 from action_model.CheatingDetection import startModel
 
 def startDetection(examDetails):
-    streamAddress=Room.query.filter_by(room_id=examDetails.room_id).first().stream_address
-    obj_to_be_sent_to_model = {'stream_address':streamAddress,'exam_id':examDetails.exam_id}
+    room = Room.query.filter_by(room_id=examDetails.room_id).first()
+    streamAddress=room.stream_address
+    port=room.output_port
+    obj_to_be_sent_to_model = {'stream_address':streamAddress,'exam_id':examDetails.exam_id,'port':int(port)}
     startModel(obj_to_be_sent_to_model)
 
 def checktime(t):

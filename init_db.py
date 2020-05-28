@@ -19,22 +19,22 @@ course = Course(course_id = 2,course_name = 'Computer Networking',cr_hours = 3)
 db.session.add(course)
 # ******************************************************************************************
 
-room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'v3short.mp4')
+room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'v43.mp4',output_port=12345)
 db.session.add(room)
 
-room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'http://192.168.1.2:5001/video',output_port=12345)
+room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'http://192.168.1.2:5001/video',output_port=12346)
 db.session.add(room)
 
 room = Room(room_id = 3,room_code = 'S-1',capacity = 65,stream_address = 'http://192.168.1.2:5001/video',output_port=12345)
 db.session.add(room)
 # ******************************************************************************************
-student = Student(student_id='k16-3890',name='Muhammad Raza',ph_number='03452445249')
+student = Student(student_id='k163890',name='Muhammad Raza',ph_number='03452445249')
 db.session.add(student)
 
-student1 = Student(student_id='k16-3886',name='Mustafa Irfan',ph_number='03256899947')
+student1 = Student(student_id='k163886',name='Mustafa Irfan',ph_number='03256899947')
 db.session.add(student1)
 
-student2 = Student(student_id='k16-3863',name='Mujtaba Bawani',ph_number='0325587555')
+student2 = Student(student_id='k163863',name='Mujtaba Bawani',ph_number='0325587555')
 db.session.add(student2)
 # ******************************************************************************************
 exam1 = Exam(exam_id = 1,time_slot = 'Wed Apr  8 03:24:00 2020',room_id = 1,course_id = 2,duration = 1,facenetStatus=0)

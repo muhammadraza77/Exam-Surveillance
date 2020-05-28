@@ -53,25 +53,28 @@ def write(x, img,classes,colors,frameNumber,examid,fs):
     print(cls)
     print(x)
     print("########")
-    label = "{0}".format(classes[cls])
-    label = label + "==" + str(x[5])
-    color = random.choice(colors)
+    if int(x[0])==0:
+        label = "{0}".format(classes[cls])
+        label = label + "==" + str(x[5])
+    
+        color = random.choice(colors)
 
-    cv2.rectangle(img, c1, c2,color, 1)
-    t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1 , 1)[0]
-    print(x[0].int())
+        cv2.rectangle(img, c1, c2,color, 1)
+        t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1 , 1)[0]
 
     # //******************crop culprits***********************************//
-    if int(x[0])==0:
+#    if int(x[0])==0:
         cropped=img[c1[1]:c2[1], c1[0]:c2[0], :]
-        cv2.imwrite("action_model//"+"database//"+examid+"//frame_"+str(frameNumber)+".png",cv2.cvtColor(cropped, cv2.COLOR_RGB2BGR))
+#        cropped=cv2.cvtColor(cropped, cv2.COLOR_RGB2BGR)
+        cv2.imwrite("action_model//"+"database//"+examid+"//frame_"+str(frameNumber)+".png",cropped)
     # cv2.imwrite("frame_"+str(frameNumber)+".png",cropped)    
     # //*******************************************************************//
 
-    c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
-    cv2.rectangle(img, c1, c2,color, -1)
+        c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
+        cv2.rectangle(img, c1, c2,color, -1)
     
-    cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
+        cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
+    
     fs.udp_frame(img)
     return img
 
@@ -139,7 +142,7 @@ def startModel(paramerter):
     
     # *****************************udp socket creation*******************************
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    port = 12345
+    port = paramerter['port']
 
     fs = FrameSegment(s, port)
 

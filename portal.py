@@ -21,18 +21,24 @@ import pickle
 import numpy as np
 import struct ## new
 import zlib
-
+import time
 
 MAX_DGRAM = 2**16
+pp = 0
 
 def dump_buffer(s):
+    start = time.time()
     """ Emptying buffer frame """
     while True:
+        if (time.time()-start == 15):
+            s.close()
+            return False
         seg, addr = s.recvfrom(MAX_DGRAM)
         print(seg[0])
         if struct.unpack("B", seg[0:1])[0] == 1:
             print("finish emptying buffer")
             break
+    return True
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 #project_dir = "C:\\Users\\User\\OneDrive\\Desktop\\Exam-Surveillance"
@@ -65,6 +71,11 @@ def live_video(video_id):
     coursedetails = Course.query.filter_by(course_id=Examdetails.course_id).first()
     roomdetails = Room.query.filter_by(room_id=Examdetails.room_id).first()
     OtherExam = Exam.query.filter(Exam.exam_id != id).all()
+    global pp
+    pp = roomdetails.output_port
+    print("*1*************$$$$$$$$$$$$$$$$$$")
+    print(pp)
+    print("**************$$$$$$$$$$$$$$$$$$")
     temp = []
     for Examitration in OtherExam:
         temp.append({"href": "/live_video/" +
@@ -109,11 +120,15 @@ def updateDatabase():
 
 def get_frame():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind(('127.0.0.1', 12345))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print("*2*************$$$$$$$$$$$$$$$$$$")
+    print(pp)
+    print("**************$$$$$$$$$$$$$$$$$$")
+    s.bind(('127.0.0.1', int(pp)))
     dat = b''
-    dump_buffer(s)
+    flag=dump_buffer(s)
 
-    while True:
+    while flag:
         print("hey")
         seg, addr = s.recvfrom(MAX_DGRAM)
         if struct.unpack("B", seg[0:1])[0] > 1:
@@ -140,6 +155,7 @@ def get_frame():
 
 @app.route('/video_feed')
 def video_feed():
+
     return Response(get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
