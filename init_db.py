@@ -19,7 +19,7 @@ course = Course(course_id = 2,course_name = 'Computer Networking',cr_hours = 3)
 db.session.add(course)
 # ******************************************************************************************
 
-room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'v43.mp4',output_port=12345)
+room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'v44.mp4',output_port=12345)
 db.session.add(room)
 
 room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'http://192.168.1.2:5001/video',output_port=12346)
