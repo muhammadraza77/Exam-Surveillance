@@ -36,6 +36,15 @@ db.session.add(student1)
 
 student2 = Student(student_id='k163863',name='Mujtaba Bawani',ph_number='0325587555')
 db.session.add(student2)
+
+student3 = Student(student_id='k163862',name='Ammar Rizwan',ph_number='03368310085')
+db.session.add(student3)
+
+student4 = Student(student_id='k163905',name='Tahir Raza',ph_number='03251234567')
+db.session.add(student4)
+
+student5 = Student(student_id='k163865',name='Muhammad Ahmed ',ph_number='03212002529')
+db.session.add(student5)
 # ******************************************************************************************
 exam1 = Exam(exam_id = 1,time_slot = 'Wed Apr  8 03:24:00 2020',room_id = 1,course_id = 2,duration = 1,facenetStatus=0)
 db.session.add(exam1)
