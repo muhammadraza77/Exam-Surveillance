@@ -61,6 +61,10 @@ class DetectionAlert(db.Model):
     det_type = db.Column(db.Integer,nullable=False)
     status = db.Column(db.String(50))
 
+class FrameData(db.Model):
+    id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
+    frameID = db.Column(db.String(30), unique=True, nullable=False)
+    DetectionID = db.Column(db.Integer, unique=True, nullable=False)
 
 def init_db():
 	db.create_all()

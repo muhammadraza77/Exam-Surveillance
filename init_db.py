@@ -4,6 +4,7 @@ from model.Model import Room
 from model.Model import Student
 from model.Model import Exam
 from model.Model import DetectionAlert
+from model.Model import FrameData
 
 
 db.drop_all()
@@ -61,8 +62,8 @@ db.session.add(det)
 det = DetectionAlert(exam=exam,student=student1,det_type=3,status="detected")
 db.session.add(det)
 
-det = DetectionAlert(exam=exam1,student=student1,det_type=2,status="detected")
-db.session.add(det)
 # ******************************************************************************************
+frame = FrameData(frameID = 'frame_303.png',DetectionID = 1 )
+db.session.add(frame)
 
 db.session.commit()
