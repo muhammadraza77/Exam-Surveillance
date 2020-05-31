@@ -81,7 +81,6 @@ def live_video(video_id):
     pp = roomdetails.output_port
     print("*1*************$$$$$$$$$$$$$$$$$$")
     print(pp)
-    print("**************$$$$$$$$$$$$$$$$$$")
     temp = []
     for Examitration in OtherExam:
         temp.append({"href": "/live_video/" +
@@ -123,14 +122,16 @@ def change():
 @app.route("/updateDatabase",methods=['POST'])
 def updateDatabase():
     x = (request.form['value'])
-    print(x)
+    did = (request.form['did'])
+    # session.query.filter_by(DetectionAlert.id=did).update({DetectionAlert.status:x})
+    DetectionAlert.query.filter_by(id=did).first().update({status:"x"})
+    print(did)
+
     return jsonify({'value': x })
 
 def get_frame():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    print("*2*************$$$$$$$$$$$$$$$$$$")
-    print(pp)
     s.bind(('127.0.0.1', int(pp)))
     dat = b''
     flag=dump_buffer(s)

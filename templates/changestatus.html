@@ -37,8 +37,8 @@
           <img src="{{url_for('Custom_Static',filename=frame.frameID )}}" style="border:5px solid black" width="500" height="600">
         </div>
         <div class="col-6" >
-            <br>
-            <label for="name">Student:-      {{detected.student_id}}</label>
+          <br>
+            <label for="name" class="test" id="{{detected.id}}">Student:-      {{detected.student_id}}</label>
             <br>
             <label for="exam">Exam:-         {{course_detected.course_name}} </label>
             <br>
@@ -68,7 +68,9 @@
         $('form').on('submit',function(event){
             $.ajax({
               data:{
-              value : document.getElementsByClassName("not-active")[0].value
+              value : document.getElementsByClassName("not-active")[0].value,
+             did:  document.getElementsByClassName("test")[0].id
+
             },
             type : 'POST',
             url : '/updateDatabase'
