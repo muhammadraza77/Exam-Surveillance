@@ -104,7 +104,7 @@ def change():
     detected = None
     exam_detected =None
     course_detected = None
-    frame1 = None
+    frame1 = []
     if request.method == "POST" :
         det_id = request.form.get("detection_id")
         exam_id = request.form.get("exam_id")
@@ -112,8 +112,8 @@ def change():
         detected = DetectionAlert.query.filter_by(id = det_id).first()
         exam_detected = Exam.query.filter_by(exam_id=detected.exam_id).first()
         course_detected = Course.query.filter_by(course_id=exam_detected.course_id).first()
-        frame1 = FrameData.query.filter_by(DetectionID = det_id).first()
-        print(frame1)
+        frame1 =(FrameData.query.filter_by(DetectionID = det_id).all())
+        # print(detected.status)
     else:
         print("here")
         print(request.form)
@@ -123,9 +123,11 @@ def change():
 def updateDatabase():
     x = (request.form['value'])
     did = (request.form['did'])
-    # session.query.filter_by(DetectionAlert.id=did).update({DetectionAlert.status:x})
-    DetectionAlert.query.filter_by(id=did).first().update({status:"x"})
-    print(did)
+    db.session.query(DetectionAlert).filter_by(id=did).update({DetectionAlert.status:x})
+    # detect = DetectionAlert.query.filter_by(id=did).first()
+    # detect.status = x
+
+    db.session.commit()
 
     return jsonify({'value': x })
 

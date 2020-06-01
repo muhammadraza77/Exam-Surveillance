@@ -66,4 +66,19 @@ db.session.add(det)
 frame = FrameData(frameID = 'frame_303.png',DetectionID = 1 )
 db.session.add(frame)
 
+frame = FrameData(frameID = 'frame_304.png',DetectionID = 1 )
+db.session.add(frame)
+
+frame = FrameData(frameID = 'frame_305.png',DetectionID = 1 )
+db.session.add(frame)
+
+frame = FrameData(frameID = 'frame_306.png',DetectionID = 1 )
+db.session.add(frame)
+
+frame = FrameData(frameID = 'frame_307.png',DetectionID = 1 )
+db.session.add(frame)
+
+frame = FrameData(frameID = 'frame_308.png',DetectionID = 1 )
+db.session.add(frame)
+
 db.session.commit()

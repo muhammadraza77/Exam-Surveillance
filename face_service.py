@@ -30,31 +30,31 @@ for individualExam in allExams:
 				print(name)
 				
 				if name == "unknown":
-					# frame = FrameData()
 					continue
 
-				student=Student.query.filter_by(student_id=name).first()
-				
-				exists= DetectionAlert.query.filter_by(student_id=name,exam=exam).first()
+				student = Student.query.filter_by(student_id=name).first()
+				if student!=None:
+					exists = DetectionAlert.query.filter_by(student_id=name,exam=exam).first()
 
-				if(exists is not None):
-					print("Already Exists")
-				else:
-					# sendMail(name+"@nu.edu.pk")
-					if student!=None:
+					if(exists is not None):
+						print("Already Exists")
+						frame = FrameData(frameID = b,DetectionID=exists.id)
+						db.session.add(frame)
+						db.session.commit()
+					
+					else:
+						# sendMail(name+"@nu.edu.pk")
 						print("DB updated")
 						# frame_ID=(b.split('_')[1].split('.')[0])
-						# print(frame_ID)
 						det = DetectionAlert(exam=exam,student=student,det_type=2,status="detected")
 						db.session.add(det)
 						db.session.commit()
 						print(b)
 
 						frame = FrameData(frameID = b ,DetectionID = det.id)
-
 						db.session.add(frame)
 						db.session.commit()
-				
+					
 
 
 
