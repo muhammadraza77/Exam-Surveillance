@@ -50,9 +50,9 @@ def write(x, img,classes,colors,frameNumber,examid,fs):
     c1 = tuple(x[1:3].int())
     c2 = tuple(x[3:5].int())
     cls = int(x[-1])
-    print(cls)
-    print(x)
-    print("########")
+    # print(cls)
+    # print(x)
+    # print("########")
     if int(x[0])==0:
         label = "{0}".format(classes[cls])
         label = label + "==" + str(x[5])
@@ -65,6 +65,7 @@ def write(x, img,classes,colors,frameNumber,examid,fs):
     # //******************crop culprits***********************************//
 #    if int(x[0])==0:
         cropped=img[c1[1]:c2[1], c1[0]:c2[0], :]
+        print('detected')
 #        cropped=cv2.cvtColor(cropped, cv2.COLOR_RGB2BGR)
         cv2.imwrite("action_model//"+"database//"+examid+"//frame_"+str(frameNumber)+".png",cropped)
     # cv2.imwrite("frame_"+str(frameNumber)+".png",cropped)    
@@ -183,7 +184,7 @@ def startModel(paramerter):
 
     
     vout = cv2.VideoWriter()
-    vout.open(os.path.join("imgs", "res", "test1.avi"), fourcc, 20, sz, True)
+    vout.open(os.path.join("imgs", "res", "test11.avi"), fourcc, 20, sz, True)
     # ////////////////////
 
 

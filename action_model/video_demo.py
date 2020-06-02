@@ -6,9 +6,9 @@ import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 import cv2 
-from util import *
-from darknet import Darknet
-from preprocess import prep_image, inp_to_image, letterbox_image
+from util1 import *
+from darknet1 import Darknet
+from preprocess1 import prep_image, inp_to_image, letterbox_image
 import pandas as pd
 import random 
 import pickle as pkl
@@ -34,7 +34,6 @@ def prep_image(img, inp_dim):
     
     Returns a Variable 
     """
-
     orig_im = img
     dim = orig_im.shape[1], orig_im.shape[0]
     img = (letterbox_image(orig_im, (inp_dim, inp_dim)))
@@ -46,18 +45,21 @@ def write(x, img):
     c1 = tuple(x[1:3].int())
     c2 = tuple(x[3:5].int())
     cls = int(x[-1])
-    print(cls)
-    print(x)
-    print(classes)
-    print("########")
-    label = "{0}".format(classes[cls])
-    label = label + "==" + str(x[5])
-    color = random.choice(colors)
-    cv2.rectangle(img, c1, c2,color, 1)
-    t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1 , 1)[0]
-    c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
-    cv2.rectangle(img, c1, c2,color, -1)
-    cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
+    # print(cls)
+    # print(x)
+    # print(classes)
+    # print("########")
+    if int(x[0])==0:
+            
+        label = "{0}".format(classes[cls])
+        print("detection")
+        label = label + "==" + str(x[5])
+        color = random.choice(colors)
+        cv2.rectangle(img, c1, c2,color, 1)
+        t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1 , 1)[0]
+        c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
+        cv2.rectangle(img, c1, c2,color, -1)
+        cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
     return img
 
 def arg_parse():
@@ -80,7 +82,7 @@ def arg_parse():
                         default = "cfg/yolov3.cfg", type = str)
     parser.add_argument("--weights", dest = 'weightsfile', help = 
                         "weightsfile",
-                        default = "yolov3.weights", type = str)
+                        default = "yolov3_6000_3classes.weights", type = str)
     parser.add_argument("--reso", dest = 'reso', help = 
                         "Input resolution of the network. Increase to increase accuracy. Decrease to increase speed",
                         default = "416", type = str)
@@ -121,6 +123,7 @@ if __name__ == '__main__':
     videofile = args.video
     
     cap = cv2.VideoCapture(videofile)
+    
     # /////////////////
     sz = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -129,7 +132,7 @@ if __name__ == '__main__':
 
     
     vout = cv2.VideoWriter()
-    vout.open(os.path.join("imgs", "res", "test1.avi"), fourcc, 20, sz, True)
+    vout.open(os.path.join("imgs", "res", "tespp.avi"), fourcc, 20, (1920,400), True)
     # ////////////////////
 
 
@@ -141,8 +144,11 @@ if __name__ == '__main__':
         
         ret, frame = cap.read()
         if ret:
+            frame = frame[300:700,:]
             img, orig_im, dim = prep_image(frame, inp_dim)
             
+            
+
             im_dim = torch.FloatTensor(dim).repeat(1,2)                        
             
             
@@ -165,8 +171,6 @@ if __name__ == '__main__':
                 continue
             
             
-
-            
             im_dim = im_dim.repeat(output.size(0), 1)
             scaling_factor = torch.min(inp_dim/im_dim,1)[0].view(-1,1)
             
@@ -180,7 +184,7 @@ if __name__ == '__main__':
                 output[i, [2,4]] = torch.clamp(output[i, [2,4]], 0.0, im_dim[i,1])
             
             classes = load_classes('data/coco.names')
-            print(classes)
+            # print(classes)
             colors = pkl.load(open("pallete", "rb"))
             
             list(map(lambda x: write(x, orig_im), output))
