@@ -8,6 +8,7 @@ from model.Model import Room
 from model.Model import Student
 from model.Model import Exam
 from model.Model import DetectionAlert
+from model.Model import FrameData
 
 from flask import Response
 import threading
@@ -22,6 +23,8 @@ import numpy as np
 import struct ## new
 import zlib
 import time
+from flask import send_from_directory
+
 
 MAX_DGRAM = 2**16
 pp = 0
@@ -45,6 +48,9 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "database.db"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+assets_folder = os.path.join(app.root_path, 'action_model\database\\1')
+print(assets_folder)
+# app.add_url_rule('../action_model/<path:filename>', endpoint='attachments', build_only=True)
 db = SQLAlchemy(app)
 
 
@@ -75,7 +81,6 @@ def live_video(video_id):
     pp = roomdetails.output_port
     print("*1*************$$$$$$$$$$$$$$$$$$")
     print(pp)
-    print("**************$$$$$$$$$$$$$$$$$$")
     temp = []
     for Examitration in OtherExam:
         temp.append({"href": "/live_video/" +
@@ -99,7 +104,7 @@ def change():
     detected = None
     exam_detected =None
     course_detected = None
-
+    frame1 = []
     if request.method == "POST" :
         det_id = request.form.get("detection_id")
         exam_id = request.form.get("exam_id")
@@ -107,23 +112,28 @@ def change():
         detected = DetectionAlert.query.filter_by(id = det_id).first()
         exam_detected = Exam.query.filter_by(exam_id=detected.exam_id).first()
         course_detected = Course.query.filter_by(course_id=exam_detected.course_id).first()
+        frame1 =(FrameData.query.filter_by(DetectionID = det_id).all())
+        # print(detected.status)
     else:
         print("here")
         print(request.form)
-    return render_template('changestatus.html',detected=detected,exam_detected=exam_detected,course_detected=course_detected)
+    return render_template('changestatus.html',detected=detected,exam_detected=exam_detected,course_detected=course_detected,frame=frame1)
 
 @app.route("/updateDatabase",methods=['POST'])
 def updateDatabase():
     x = (request.form['value'])
-    print(x)
+    did = (request.form['did'])
+    db.session.query(DetectionAlert).filter_by(id=did).update({DetectionAlert.status:x})
+    # detect = DetectionAlert.query.filter_by(id=did).first()
+    # detect.status = x
+
+    db.session.commit()
+
     return jsonify({'value': x })
 
 def get_frame():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    print("*2*************$$$$$$$$$$$$$$$$$$")
-    print(pp)
-    print("**************$$$$$$$$$$$$$$$$$$")
     s.bind(('127.0.0.1', int(pp)))
     dat = b''
     flag=dump_buffer(s)
@@ -158,6 +168,9 @@ def video_feed():
 
     return Response(get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/action_model/database/1/<path:filename>')
+def Custom_Static(filename):
+    return send_from_directory(assets_folder, filename)
 
 if __name__ == '__main__':
     # t = threading.Thread(target=capture_image)
