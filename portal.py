@@ -62,6 +62,7 @@ def hello():
 
 @app.route('/home')
 def homescreen():
+    print("f")
     detection=DetectionAlert.query.all()
     details = []
     for det in detection:
