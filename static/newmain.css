@@ -13,6 +13,10 @@ label {
   display: inline-block;
 }
 
+h1 {
+  color: green;
+}
+
 /* Style the submit button */
 input[type=submit] {
   background-color: #4CAF50;

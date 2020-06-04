@@ -92,8 +92,10 @@ def live_video(video_id):
 @app.route("/exams", methods=["GET", "POST"])
 def exams():
     if request.form:
-        book = Exam(exam_id=request.form.get("exam_id"), time_slot=request.form.get("time_slot"),
-                    room_id=request.form.get("room_id"), course_id=request.form.get("course_id"))
+        print("iiiihello")
+        book = Exam(duration=request.form.get("dur"), time_slot=request.form.get("time_slot"),
+                    room_id=request.form.get("room_id"), course_id=request.form.get("course_id"),
+                     facenetStatus=0)
         db.session.add(book)
         db.session.commit()
     exams = Exam.query.all()

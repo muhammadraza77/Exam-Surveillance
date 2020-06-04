@@ -1,66 +1,148 @@
-<link rel="stylesheet" href="{{ url_for('static',filename='newmain.css') }}" type="text/css">
 <html>
+  
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='newmain.css') }}" type="text/css">
+
+    <style>
+      body {
+        background-image: url("static/Rectangle@3x.png");
+      }
+      .footer .row {
+        height: 25px;
+        border-spacing: 40px;
+      }
+
+      .footer .row .col {
+        padding: 0;
+        margin: 10px;
+      }
+      .col-sm {
+        margin-left: 40px;
+        padding-top: 30px;
+      }
+      .topnav .col{
+        float: right ;
+      }
+      .vertical-menu {
+          height: 250px;
+          overflow-y: auto;
+      }
+
+      .vertical-menu a {
+        /* background-color: #ffffff; Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+      }
+
+      .vertical-menu a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+      }
+
+      .vertical-menu a.active {
+        background-color: #4CAF50; /* Add a green color to the "active/current" link */
+        color: white;
+      }
+      .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+      }
+
+      /* On mouse-over, add a deeper shadow */
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
+
+      /* Add some padding inside the card container */
+      .container {
+        padding: 2px 16px;
+      }
+      .myclass {
+        margin-bottom: 10px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 2px;
+      }
+    </style>
+  </head>
   <body>
-    <div class="container">
-      <h1>Add Exam</h1>
+
+    <div class="container" style="margin: 50px 200px 0px 200px;">
+      <div class="jumbotron">
+        <h1 style="text-align: center;font-size: 50;color: #004039;"> Add Exam</h1>
     
-      <form action="/" method="POST">
-        <div class="row">
-          <div class="col-25">
-            <label for="fname">Exam ID</label>
+        <form action="/exams" method="POST">
           </div>
-          <div class="col-75">
-            <input type="text"  name="exam_id" placeholder="Enter your Exam ID....">
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Room Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text"  name="room_id" placeholder="Enter your Room ID.....">
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label for="lname">Room Id</label>
+          
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Course ID</label>
+            </div>
+            <div class="col-75">
+              <input type="text" name="course_id"  >
+            </div>
           </div>
-          <div class="col-75">
-            <input type="text"  name="room_id" placeholder="Enter your Room ID.....">
+  
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Time Slot</label>
+            </div>
+            <div class="col-75">
+              <input type="text" name="time_slot"  >
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="fname">Duration</label>
+            </div>
+            <div class="col-75">
+              <input type="text"  name="dur" placeholder="Enter duration of exam....">
+            </div>
         
-        <div class="row">
-          <div class="col-25">
-            <label for="subject">Course ID</label>
+  <br><br>
+          <div class="row">
+            <input type="submit" value="Add">
           </div>
-          <div class="col-75">
-            <input type="text" name="course_id"  >
-          </div>
-        </div>
+        </form>
+           
 
-        <div class="row">
-          <div class="col-25">
-            <label for="subject">Time Slot</label>
-          </div>
-          <div class="col-75">
-            <input type="text" name="time_slot"  >
-          </div>
-        </div>
-<br><br>
-        <div class="row">
-          <input type="submit" value="Add">
-        </div>
-      </form>
+      </div>
     </div>
-
+<!-- ////// -->
 <div><br><br></div>
 
-    <div class="container">
-    <h1> View Exam</h1>
-    {% for exam in exams %}
+    <div class="container" style="margin: 10px 200px 0px 200px;">
+    <h1 style="text-align: center;font-size: 50;color: #004039;"> View Exam</h1>
+    <div class="col vertical-menu" >
+      {% for exam in exams %}
+        <a class="myclass" href="#">
+          <div class="card">
+            <div class="container" style="background-color: #ffffff;">
+                <h4><b>Exam ID:- {{exam.exam_id}} </b></h4>
+                <!-- <p></p> -->
+                <p>Exam ID:- {{exam.exam_id}}  ||  Room ID:- {{exam.room_id}} ||  CourseID:-{{exam.course_id}} ||TimeSlot:- {{exam.time_slot}}</p>
+    
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    
+    <!-- {% for exam in exams %}
       <p>Exam ID:- {{exam.exam_id}}  ||  Room ID:- {{exam.room_id}} ||  CourseID:-{{exam.course_id}} ||TimeSlot:- {{exam.time_slot}}</p>
-    {% endfor %}
+    {% endfor %} -->
 
   </div>
   </body>
 </html>
 
-
-<html>
-  <body>
-   
-  </body>
-</html>
