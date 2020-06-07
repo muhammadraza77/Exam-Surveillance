@@ -80,7 +80,12 @@
               <label for="lname">Room Id</label>
             </div>
             <div class="col-75">
-              <input type="text"  name="room_id" placeholder="Enter your Room ID.....">
+              <select name="room_id">
+                {% for i in (allRooms) %} 
+                <option value="{{i.room_id}}">{{i.room_code}}</option>
+                {% endfor %}
+  
+              </select>
             </div>
           </div>
           
@@ -89,7 +94,12 @@
               <label for="subject">Course ID</label>
             </div>
             <div class="col-75">
-              <input type="text" name="course_id"  >
+              <select name="course_id">
+                {% for i in (allCourses) %} 
+                <option value="{{i.course_id}}">{{i.course_name}}</option>
+                {% endfor %}
+  
+              </select>
             </div>
           </div>
   
@@ -98,7 +108,7 @@
               <label for="subject">Time Slot</label>
             </div>
             <div class="col-75">
-              <input type="text" name="time_slot"  >
+              <input type="datetime-local"  style="width:100%; height: 5%;"  name="time_slot" >
             </div>
           </div>
           <div class="row">
@@ -128,9 +138,10 @@
         <a class="myclass" href="#">
           <div class="card">
             <div class="container" style="background-color: #ffffff;">
-                <h4><b>Exam ID:- {{exam.exam_id}} </b></h4>
+                <h4><b>Course:- {{exam.course.course_name}} </b></h4>
                 <!-- <p></p> -->
-                <p>Exam ID:- {{exam.exam_id}}  ||  Room ID:- {{exam.room_id}} ||  CourseID:-{{exam.course_id}} ||TimeSlot:- {{exam.time_slot}}</p>
+                <p>  Room ID:- {{exam.room.room_code}} </p>
+                <p> TimeSlot:- {{exam.time_slot}}</p>
     
             </div>
           </div>

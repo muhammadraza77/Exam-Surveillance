@@ -29,9 +29,7 @@ for individualExam in allExams:
 			for name in result:
 				print(name)
 				
-				if name == "unknown":
-					continue
-
+				
 				student = Student.query.filter_by(student_id=name).first()
 				if student!=None:
 					exists = DetectionAlert.query.filter_by(student_id=name,exam=exam).first()
@@ -43,7 +41,6 @@ for individualExam in allExams:
 						db.session.commit()
 					
 					else:
-						# sendMail(name+"@nu.edu.pk")
 						print("DB updated")
 						# frame_ID=(b.split('_')[1].split('.')[0])
 						det = DetectionAlert(exam=exam,student=student,det_type=2,status="detected")
@@ -54,6 +51,14 @@ for individualExam in allExams:
 						frame = FrameData(frameID = b ,DetectionID = det.id)
 						db.session.add(frame)
 						db.session.commit()
+
+						if name == "unknown":
+							c=exam.course.course_name
+							sendMail("k163890@nu.edu.pk",examid=individualExam,examcode=c)
+						else:
+							c=exam.course.course_name
+							sendMail(name+"@nu.edu.pk",detid=det.id,examcode=c)
+
 					
 
 

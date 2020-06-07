@@ -32,10 +32,10 @@
         transform: translate(-50%, -50%);
         color: white;
       }
-      img {
+      /* img {
         height: 400px;
         width: 500px;
-      }
+      } */
       .row {
         margin-top: 10px;
       }
@@ -57,19 +57,20 @@
       <div class="row">
         <div class="col-6" style="border-right: 4px grey solid; ">
           <!-- <iframe src="localhost:8485"></iframe> -->
-        <img src="{{ url_for('video_feed') }}">
+        <img src="{{ url_for('video_feed') }}" style="width: 500px; height: 400px;">
         </div>
         <div class="col-6">
           <div class="container">
             <div class="row">
               {% for item in temp %}
-              <div class="col">
+              <div class="col" style="margin: 10px;">
                 <div class="wrapper">
-                  <a href="{{item.href}}"
-                    ><img src="../static/Rectangle1.png" width="200px"
-                  /></a>
+                  <a href="{{item.href}}">
+                    <img src="../static/Rectangle1.png" width="200px">
+                  </a>
                   <div class="top-left">Live</div>
                   <div class="centered">Exam no.{{item.id}}</div>
+
                 </div>
               </div>
               {{item.temp}} {% endfor %}

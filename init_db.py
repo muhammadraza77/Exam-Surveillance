@@ -20,7 +20,7 @@ course = Course(course_id = 2,course_name = 'Computer Networking',cr_hours = 3)
 db.session.add(course)
 # ******************************************************************************************
 
-room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'44.mp4',output_port=12345)
+room = Room(room_id = 1,room_code = 'R-11',capacity = 50,stream_address = "action_model//"+'v43.mp4',output_port=12345)
 db.session.add(room)
 
 room = Room(room_id = 2,room_code = 'R-12',capacity = 45,stream_address = 'http://192.168.1.2:5001/video',output_port=12346)
@@ -46,6 +46,9 @@ db.session.add(student4)
 
 student5 = Student(student_id='k163865',name='Muhammad Ahmed ',ph_number='03212002529')
 db.session.add(student5)
+
+student6 = Student(student_id='unknown',name='unknown',ph_number='000000000')
+db.session.add(student6)
 # ******************************************************************************************
 exam1 = Exam(exam_id = 1,time_slot = 'Wed Apr  8 03:24:00 2020',room_id = 1,course_id = 2,duration = 1,facenetStatus=0)
 db.session.add(exam1)
@@ -56,29 +59,19 @@ db.session.add(exam)
 exam = Exam(exam_id = 3,time_slot = 'Wed Apr  8 03:22:00 2020',room_id = 3,course_id = 0,duration = 1,facenetStatus=0)
 db.session.add(exam)
 # ******************************************************************************************
-det = DetectionAlert(exam=exam,student=student,det_type=1,status="detected")
-db.session.add(det)
+# det = DetectionAlert(exam=exam,student=student,det_type=1,status="detected")
+# db.session.add(det)
 
-det = DetectionAlert(exam=exam,student=student1,det_type=3,status="detected")
-db.session.add(det)
+# det = DetectionAlert(exam=exam,student=student1,det_type=3,status="detected")
+# db.session.add(det)
 
+# det = DetectionAlert(exam=exam1,student=student6,det_type=3,status="detected")
+# db.session.add(det)
 # ******************************************************************************************
-frame = FrameData(frameID = 'frame_303.png',DetectionID = 1 )
-db.session.add(frame)
+# frame = FrameData(frameID = 'frame_1231.png',DetectionID = 1 )
+# db.session.add(frame)
 
-frame = FrameData(frameID = 'frame_304.png',DetectionID = 1 )
-db.session.add(frame)
-
-frame = FrameData(frameID = 'frame_305.png',DetectionID = 1 )
-db.session.add(frame)
-
-frame = FrameData(frameID = 'frame_306.png',DetectionID = 1 )
-db.session.add(frame)
-
-frame = FrameData(frameID = 'frame_307.png',DetectionID = 1 )
-db.session.add(frame)
-
-frame = FrameData(frameID = 'frame_308.png',DetectionID = 1 )
-db.session.add(frame)
+# frame = FrameData(frameID = 'frame_1230.png',DetectionID = 3 )
+# db.session.add(frame)
 
 db.session.commit()

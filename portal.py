@@ -24,6 +24,7 @@ import struct ## new
 import zlib
 import time
 from flask import send_from_directory
+from datetime import datetime
 
 
 MAX_DGRAM = 2**16
@@ -48,7 +49,7 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "database.db"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
-assets_folder = os.path.join(app.root_path, 'action_model\database\\1')
+assets_folder = os.path.join(app.root_path, 'action_model//database//1')
 print(assets_folder)
 # app.add_url_rule('../action_model/<path:filename>', endpoint='attachments', build_only=True)
 db = SQLAlchemy(app)
@@ -62,7 +63,7 @@ def hello():
 
 @app.route('/home')
 def homescreen():
-    print("f")
+    print("f") 
     detection=DetectionAlert.query.all()
     details = []
     for det in detection:
@@ -92,15 +93,22 @@ def live_video(video_id):
 
 @app.route("/exams", methods=["GET", "POST"])
 def exams():
+    allCourses =(Course.query.all())
+    allRooms = Room.query.all()
+
     if request.form:
-        print("iiiihello")
-        book = Exam(duration=request.form.get("dur"), time_slot=request.form.get("time_slot"),
+        DTime = request.form.get("time_slot")
+        
+        objDate = datetime.strptime(DTime, '%Y-%m-%dT%H:%M')
+        convertedDate=datetime.strftime(objDate,'%a %b %d %X %Y')
+
+        book = Exam(duration=request.form.get("dur"), time_slot=convertedDate,
                     room_id=request.form.get("room_id"), course_id=request.form.get("course_id"),
                      facenetStatus=0)
         db.session.add(book)
         db.session.commit()
     exams = Exam.query.all()
-    return render_template("Examination.html", exams=exams)
+    return render_template("Examination.html", exams=exams,allCourses=allCourses,allRooms =allRooms)
 
 @app.route("/changestatus", methods=["GET", "POST"])
 def change():
@@ -111,11 +119,17 @@ def change():
     if request.method == "POST" :
         det_id = request.form.get("detection_id")
         exam_id = request.form.get("exam_id")
-        # print("detID"+ str(det_id))
-        detected = DetectionAlert.query.filter_by(id = det_id).first()
+        print("detID"+ str(det_id))
+        print("examID"+ str(exam_id))
+        if exam_id!="":
+            detected=DetectionAlert.query.filter_by(exam_id = exam_id,student_id='unknown').first()
+            
+        else:
+            detected = DetectionAlert.query.filter_by(id = det_id).first()
+        
         exam_detected = Exam.query.filter_by(exam_id=detected.exam_id).first()
         course_detected = Course.query.filter_by(course_id=exam_detected.course_id).first()
-        frame1 =(FrameData.query.filter_by(DetectionID = det_id).all())
+        frame1 =(FrameData.query.filter_by(DetectionID = detected.id).all())
         # print(detected.status)
     else:
         print("here")

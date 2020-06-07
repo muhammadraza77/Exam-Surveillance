@@ -63,7 +63,7 @@ class DetectionAlert(db.Model):
 
 class FrameData(db.Model):
     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
-    frameID = db.Column(db.String(30), unique=True, nullable=False)
+    frameID = db.Column(db.String(30), unique=False, nullable=False)
     DetectionID = db.Column(db.Integer, unique=False, nullable=False)
 
 def init_db():
