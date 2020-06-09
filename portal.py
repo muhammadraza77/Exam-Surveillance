@@ -185,8 +185,10 @@ def video_feed():
 
     return Response(get_frame(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/action_model/database/1/<path:filename>')
-def Custom_Static(filename):
+@app.route('/action_model/database/<string:name>/<path:filename>')
+def Custom_Static(name,filename):
+	assets_folder = os.path.join(app.root_path, 'action_model//database')
+    assets_folder = assets_folder +'//'+name
     return send_from_directory(assets_folder, filename)
 
 if __name__ == '__main__':
